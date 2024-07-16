@@ -1,5 +1,6 @@
 import { ReactNode, useState,createContext, useContext } from 'react';
 
+
 export type Todo = {
     id:string;
     task:string;
@@ -22,7 +23,14 @@ export const TodoContext = createContext<Todos|null>(null)
 
 export const TodoContextProvider = ({children}:TodoProviderProps) => {
 
-    const [todos,setTodos] = useState<Todo[]>([])
+    const [todos,setTodos] = useState<Todo[]>(()=>{
+        try {
+            const newTodos = localStorage.getItem("todos") || "[]";
+            return JSON.parse(newTodos) as Todo[];
+        } catch (error) {
+            return []
+        }
+    })
 
     const addTodoHandler = (task:string) =>{
         setTodos((prev)=>{
@@ -37,7 +45,7 @@ export const TodoContextProvider = ({children}:TodoProviderProps) => {
             ]
             // console.log("prev-->",prev);
             // console.log("newTodos-->",newTodos);
-            
+            localStorage.setItem("todos",JSON.stringify(newTodos));
             return newTodos
         })
     }
@@ -52,6 +60,8 @@ const toogleTodoAsCompleted = (id:string) => {
             }
             return todo;
         })
+        localStorage.setItem("todos",JSON.stringify(newTodos));
+
         return newTodos;
     })
 }
@@ -61,6 +71,8 @@ const toogleTodoAsCompleted = (id:string) => {
 const todoDeleteHandler = (id:string) =>{
     setTodos((prev)=>{
         let newTodos = prev.filter((filterTodo)=>filterTodo.id !== id);
+        localStorage.setItem("todos",JSON.stringify(newTodos));
+
         return newTodos;
     })
 }
