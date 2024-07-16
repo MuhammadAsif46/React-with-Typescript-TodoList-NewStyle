@@ -1,12 +1,14 @@
 import { FormEvent, useState } from "react"
+import { useTodos } from "../../context/TodoContextProvider";
 
 const TodoForm = () => {
     const [todo,setTodo] = useState("");
+    const {addTodoHandler} = useTodos()
 
     const formSubmitHandler = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // console.log(todo);
-        // addTodoHandler(todo);
+        addTodoHandler(todo);
         setTodo("");
     }
   return (
