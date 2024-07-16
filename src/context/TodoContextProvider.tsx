@@ -1,15 +1,17 @@
 import { ReactNode, useState,createContext, useContext } from 'react';
 
-export type Todo ={
+export type Todo = {
     id:string;
     task:string;
     completed:boolean;
-    createdAt:Date;
+    createdAt:Date; 
 }
 
 export type Todos = {
     todos:Todo[];
-    addTodoHandler:(task:string) => void;
+    addTodoHandler:(task:string) => void; //call signature:
+    toogleTodoAsCompleted:(id:string) => void;
+    todoDeleteHandler:(id:string) => void;
 }
 
 export type TodoProviderProps ={
@@ -39,8 +41,33 @@ export const TodoContextProvider = ({children}:TodoProviderProps) => {
             return newTodos
         })
     }
+
+// mark completed:
+
+const toogleTodoAsCompleted = (id:string) => {
+    setTodos((prev)=>{
+        let newTodos = prev.map((todo)=>{
+            if (todo.id === id) {
+                return {...todo, completed:!todo.completed}
+            }
+            return todo;
+        })
+        return newTodos;
+    })
+}
+
+// delete Todo:
+
+const todoDeleteHandler = (id:string) =>{
+    setTodos((prev)=>{
+        let newTodos = prev.filter((filterTodo)=>filterTodo.id !== id);
+        return newTodos;
+    })
+}
+
+
   return (
-    <TodoContext.Provider value={{todos,addTodoHandler}}>
+    <TodoContext.Provider value={{todos,addTodoHandler,toogleTodoAsCompleted,todoDeleteHandler}}>
         {children}
     </TodoContext.Provider>
   )
