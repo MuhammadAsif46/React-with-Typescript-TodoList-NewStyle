@@ -14,7 +14,7 @@ const TodoForm = () => {
   return (
     <div>
         <form onSubmit={formSubmitHandler}>
-            <input type="text" value={todo} onChange={(e)=> setTodo(e.target.value)}/>
+            <input type="text" value={todo} required onChange={(e)=> setTodo(e.target.value)}/>
             <button type="submit">Add</button>
         </form>
     </div>

@@ -20,8 +20,7 @@ const TodoList = () => {
   }
 
   return (
-    <div>
-      <ul>
+      <ul className="main-task">
         {filterData.map((todo) => {
           return (
              <li key={todo.id}>
@@ -42,7 +41,6 @@ const TodoList = () => {
           );
         })}
       </ul>
-    </div>
   );
 };
 
