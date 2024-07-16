@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <main>
-        <h1>Todo React + Typescript</h1>
+        <h1>TodoList React + Typescript</h1>
         <Navbar/>
         <TodoForm/>
         <TodoList/>
